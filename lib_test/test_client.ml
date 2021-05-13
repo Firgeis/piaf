@@ -222,8 +222,14 @@ let test_https_server_certs _ () =
        `OK)
     response;
   let* () = Helper_server.teardown server in
-  (* Verify server cert rsa with SAN from cert string *)  
-  let* server, _ = Helper_server.listen ~http_port:8080 ~certfile:"server_rsa_san.pem" ~certkey:"server_rsa_san.key" () in
+  (* Verify server cert rsa with SAN from cert string *)
+  let* server, _ =
+    Helper_server.listen
+      ~http_port:8080
+      ~certfile:"server_rsa_san.pem"
+      ~certkey:"server_rsa_san.key"
+      ()
+  in
   let inchannel = open_in (Helper_server.cert_path // "ca.pem") in
   let certstring =
     really_input_string inchannel (in_channel_length inchannel)
